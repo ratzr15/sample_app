@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 abstract class ApiClient {
-  Future<dynamic> get(
+  Future<Response<T>> get<T>(
     String url, {
     Options options,
     String baseUrl = "",

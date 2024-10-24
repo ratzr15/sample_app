@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^4.0.1
-
   connectivity: ^3.0.6
   dio: 5.2.0+1
 

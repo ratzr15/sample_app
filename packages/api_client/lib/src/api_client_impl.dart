@@ -8,7 +8,7 @@ class ApiClientImpl implements ApiClient {
   ApiClientImpl(this.dio);
 
   @override
-  Future<dynamic> get(
+  Future<Response<T>> get<T>(
     String url, {
     Options? options,
     String baseUrl = "",
@@ -17,15 +17,18 @@ class ApiClientImpl implements ApiClient {
     final apiUrl = '$baseUrl/$url';
 
     try {
-      final response = await dio.get(
+      final response = await dio.get<T>(
         apiUrl,
         options: options,
         queryParameters: queryParameters,
       );
       return response;
     } catch (error) {
-      final DioException dioException = error as DioException;
-      return dioException.response;
+      if (error is DioException && error.response != null) {
+        return Future.error(error.response as Response<T>);
+      } else {
+        return Future.error(error);
+      }
     }
   }
 }
